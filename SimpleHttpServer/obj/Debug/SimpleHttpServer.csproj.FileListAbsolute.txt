@@ -1,0 +1,8 @@
+C:\Users\Даниел\Documents\GitHub\SimpleMvcFramework\SimpleHttpServer\bin\Debug\Resources\Pages\404.html
+C:\Users\Даниел\Documents\GitHub\SimpleMvcFramework\SimpleHttpServer\bin\Debug\Resources\Pages\500.html
+C:\Users\Даниел\Documents\GitHub\SimpleMvcFramework\SimpleHttpServer\bin\Debug\SimpleHttpServer.dll.config
+C:\Users\Даниел\Documents\GitHub\SimpleMvcFramework\SimpleHttpServer\bin\Debug\SimpleHttpServer.dll
+C:\Users\Даниел\Documents\GitHub\SimpleMvcFramework\SimpleHttpServer\bin\Debug\SimpleHttpServer.pdb
+C:\Users\Даниел\Documents\GitHub\SimpleMvcFramework\SimpleHttpServer\obj\Debug\SimpleHttpServer.csprojResolveAssemblyReference.cache
+C:\Users\Даниел\Documents\GitHub\SimpleMvcFramework\SimpleHttpServer\obj\Debug\SimpleHttpServer.dll
+C:\Users\Даниел\Documents\GitHub\SimpleMvcFramework\SimpleHttpServer\obj\Debug\SimpleHttpServer.pdb
