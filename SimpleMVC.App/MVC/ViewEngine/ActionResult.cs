@@ -1,5 +1,6 @@
 ﻿namespace SimpleMVC.App.MVC.ViewEngine.Generic
 {
+    using Interfaces;
     using SimpleMVC.App.MVC.Interfaces.Generic;
     using System;
 

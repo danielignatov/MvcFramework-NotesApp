@@ -1,4 +1,4 @@
-﻿namespace SimpleMVC.App.MVC.Interfaces.Generic
+﻿namespace SimpleMVC.App.MVC.Interfaces
 {
     public interface IInvocable
     {

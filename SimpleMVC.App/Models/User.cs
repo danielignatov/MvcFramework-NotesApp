@@ -8,7 +8,7 @@
         #region Constructors
         public User()
         {
-
+            this.Notes = new HashSet<Note>();
         }
         #endregion
 
@@ -20,7 +20,7 @@
 
         public string Password { get; set; }
 
-        public virtual IList<Note> Notes { get; set; }
+        public virtual ICollection<Note> Notes { get; set; }
         #endregion
     }
 }

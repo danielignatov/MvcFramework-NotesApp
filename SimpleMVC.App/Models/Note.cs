@@ -24,7 +24,7 @@
 
         public string Content { get; set; }
 
-        public User Owner { get; set; }
+        public virtual User Owner { get; set; }
         #endregion
     }
 }

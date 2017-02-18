@@ -15,12 +15,21 @@
             string page = File.ReadAllText("../../Views/Users/All.html");
             StringBuilder nameCollection = new StringBuilder();
 
-            foreach (var username in Model.Usernames)
+            if (Model.Usernames.Count > 0)
             {
-                nameCollection.AppendLine($"<p>{username}</p>");
-            }
+                foreach (var username in Model.Usernames)
+                {
+                    nameCollection.AppendLine($"<p>{username}</p>");
+                }
 
-            page = String.Format(page, nameCollection.ToString());
+                page = String.Format(page, nameCollection.ToString());
+            }
+            else
+            {
+                nameCollection.AppendLine("<p>No users in database</p>");
+
+                page = String.Format(page, nameCollection.ToString());
+            }
 
             return page;
         }

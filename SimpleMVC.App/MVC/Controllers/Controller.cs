@@ -1,5 +1,6 @@
 ﻿namespace SimpleMVC.App.MVC.Controllers
 {
+    using Interfaces;
     using MVC;
     using MVC.Interfaces.Generic;
     using MVC.ViewEngine.Generic;

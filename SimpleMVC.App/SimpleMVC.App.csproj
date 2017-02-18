@@ -59,6 +59,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\NotesApplicationContext.cs" />
+    <Compile Include="Extentions\StringExtentions.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="MVC\Controllers\Controller.cs" />

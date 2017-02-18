@@ -9,6 +9,8 @@
         public ActionResult(string viewFullQualifiedName, T model)
         {
             this.Action = (IRenderable<T>)Activator.CreateInstance(Type.GetType(viewFullQualifiedName));
+
+            Action.Model = model;
         }
         #endregion
 
