@@ -2,13 +2,13 @@
 {
     using System.Collections.Generic;
 
-    public class AllUsernamesViewModel
+    public class AllUsersIdUsernameViewModel
     {
-        public AllUsernamesViewModel()
+        public AllUsersIdUsernameViewModel()
         {
-            this.Usernames = new List<string>();
+            this.Users = new Dictionary<string, string>();
         }
 
-        public IList<string> Usernames { get; set; }
+        public IDictionary<string, string> Users { get; set; }
     }
 }

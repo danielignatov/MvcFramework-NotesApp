@@ -6,20 +6,20 @@
     using System.Text;
     using ViewModels;
 
-    public class All : IRenderable<AllUsernamesViewModel>
+    public class All : IRenderable<AllUsersIdUsernameViewModel>
     {
-        public AllUsernamesViewModel Model { get; set; }
+        public AllUsersIdUsernameViewModel Model { get; set; }
 
         public string Render()
         {
             string page = File.ReadAllText("../../Views/Users/All.html");
             StringBuilder nameCollection = new StringBuilder();
 
-            if (Model.Usernames.Count > 0)
+            if (Model.Users.Count > 0)
             {
-                foreach (var username in Model.Usernames)
+                foreach (var user in Model.Users)
                 {
-                    nameCollection.AppendLine($"<p>{username}</p>");
+                    nameCollection.AppendLine($"<p><a href=\"profile?id={user.Key}\">{user.Value}</a></p>");
                 }
 
                 page = String.Format(page, nameCollection.ToString());

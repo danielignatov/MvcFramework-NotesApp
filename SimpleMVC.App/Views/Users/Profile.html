@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <title>NotesApp</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
         crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
@@ -16,28 +17,32 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="row">
             <div class="col-xl-4 offset-xl-4 col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-10 offset-sm-1 col-10 offset-1">
-                <h1>Register new user</h1>
+                <h1>User: {0}</h1>
                 <hr>
-                <form action="register" method="POST">
+                <form action="profile" method="POST">
                     <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">Username</span>
-                        <input type="text" class="form-control" placeholder="Gandalf" name="Username" aria-describedby="basic-addon1">
+                        <span class="input-group-addon" id="basic-addon1">Title</span>
+                        <input type="text" class="form-control" placeholder="Title of note..." name="Title" aria-describedby="basic-addon1">
                     </div>
                     <br>
                     <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1">Password</span>
-                        <input type="password" class="form-control" placeholder="youshallnotpass" name="Password" aria-describedby="basic-addon1">
+                        <span class="input-group-addon" id="basic-addon1">Content</span>
+                        <input type="text" class="form-control" placeholder="Content of note..." name="Content" aria-describedby="basic-addon1">
                     </div>
-                    <hr>
+                    <input type="hidden" name="UserId" value="{1}" />
+                    <br>
                     <div class="row">
                         <div class="col-8">
-                            <button type="submit" class="btn btn-block btn-primary">Register!</button>
+                            <button type="submit" class="btn btn-block btn-primary">Add Note</button>
                         </div>
                         <div class="col-4">
                             <a href="../../home/index" style="text-decoration: none;"><button type="button" class="btn btn-block btn-default">Back</button></a>
                         </div>
                     </div>
                 </form>
+                <br>
+                <h1>List of notes</h1>
+                <hr> {2}
             </div>
         </div>
     </div>

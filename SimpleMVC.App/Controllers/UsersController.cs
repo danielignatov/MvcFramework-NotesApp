@@ -38,21 +38,65 @@
         }
 
         [HttpGet]
-        public IActionResult<AllUsernamesViewModel> All()
+        public IActionResult<AllUsersIdUsernameViewModel> All()
         {
-            List<string> usernames = null;
+            Dictionary<string, string> users = null;
 
             using (var context = new NotesApplicationContext())
             {
-                usernames = context.Users.Select(u => u.Username).ToList();
+                users = context.Users.Select(u => new { u.Id, u.Username }).ToDictionary(u => u.Id.ToString(), u => u.Username);
             }
 
-            var viewModel = new AllUsernamesViewModel()
+            var viewModel = new AllUsersIdUsernameViewModel()
             {
-                Usernames = usernames
+                Users = users
             };
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult<UserProfileViewModel> Profile(int id)
+        {
+            using (var context = new NotesApplicationContext())
+            {
+                var user = context.Users.Find(id);
+
+                var viewModel = new UserProfileViewModel
+                {
+                    UserId = user.Id,
+                    Username = user.Username,
+                    Notes = user.Notes
+                        .Select(x =>
+                        new NoteViewModel()
+                        {
+                            Title = x.Title,
+                            Content = x.Content
+                        })
+                };
+
+                return View(viewModel);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult<UserProfileViewModel> Profile(AddNoteBindingModel model)
+        {
+            using (var context = new NotesApplicationContext())
+            {
+                var user = context.Users.Find(model.UserId);
+
+                var note = new Note
+                {
+                    Title = model.Title,
+                    Content = model.Content
+                };
+
+                user.Notes.Add(note);
+                context.SaveChanges();
+            };
+
+            return Profile(model.UserId);
         }
     }
 }

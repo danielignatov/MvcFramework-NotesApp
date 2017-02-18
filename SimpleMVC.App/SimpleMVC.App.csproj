@@ -55,7 +55,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppStart.cs" />
+    <Compile Include="BindingModels\AddNoteBindingModel.cs" />
+    <Compile Include="BindingModels\NoteViewModel.cs" />
     <Compile Include="BindingModels\RegisterUserBindingModel.cs" />
+    <Compile Include="BindingModels\UserProfileViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\NotesApplicationContext.cs" />
@@ -82,6 +85,7 @@
     <Compile Include="ViewModels\AllUsernamesViewModel.cs" />
     <Compile Include="Views\Home\Index.cs" />
     <Compile Include="Views\Users\All.cs" />
+    <Compile Include="Views\Users\Profile.cs" />
     <Compile Include="Views\Users\Register.cs" />
   </ItemGroup>
   <ItemGroup>
