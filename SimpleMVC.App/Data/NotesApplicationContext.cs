@@ -1,11 +1,12 @@
 namespace SimpleMVC.App.Data
 {
     using Models;
+    using MVC.Interfaces;
     using System;
     using System.Data.Entity;
     using System.Linq;
 
-    public class NotesApplicationContext : DbContext
+    public class NotesApplicationContext : DbContext, IDbIdentityContext
     {
         // Your context has been configured to use a 'NotesApplicationContext' connection string from your application's 
         // configuration file (App.config or Web.config). By default, this connection string targets the 
@@ -18,8 +19,20 @@ namespace SimpleMVC.App.Data
         {
         }
 
+        #region Properties
         public virtual DbSet<User> Users { get; set; }
 
         public virtual DbSet<Note> Notes { get; set; }
+
+        public virtual DbSet<Login> Logins { get; set; }
+        #endregion
+
+        #region Methods
+        void IDbIdentityContext.SaveChanges()
+        {
+            // todo
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }

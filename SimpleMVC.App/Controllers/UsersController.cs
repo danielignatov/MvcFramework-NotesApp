@@ -7,6 +7,7 @@
     using MVC.Controllers;
     using MVC.Interfaces;
     using MVC.Interfaces.Generic;
+    using SimpleHttpServer.Models;
     using System.Collections.Generic;
     using System.Linq;
     using ViewModels;
@@ -97,6 +98,57 @@
             };
 
             return Profile(model.UserId);
+        }
+
+        [HttpGet]
+        public IActionResult<GreetViewModel> Greet(HttpSession session)
+        {
+            var viewModel = new GreetViewModel()
+            {
+                SessionId = session.Id
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginUserBindingModel model, HttpSession session)
+        {
+            string username = model.Username;
+            string password = model.Password;
+            string sessionId = session.Id;
+            bool loginSuccess = false;
+
+            // Validate such user with password exist in db.
+            using (var context = new NotesApplicationContext())
+            {
+                var user = context.Users.Where(u => (u.Username == username && u.Password == password)).FirstOrDefault();
+
+                if (user != null)
+                {
+                    loginSuccess = true;
+
+                    Login login = new Login()
+                    {
+                        SessionId = sessionId,
+                        User = user,
+                        IsActive = true
+                    };
+
+                    // Add login to db.
+                    context.Logins.Add(login);
+                    context.SaveChanges();
+                }
+            }
+
+            // todo add loginsuccess so user get feedback of login succes or not
+            return View();
         }
     }
 }

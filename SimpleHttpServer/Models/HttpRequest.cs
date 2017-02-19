@@ -4,11 +4,17 @@
 
     public class HttpRequest
     {
+        #region Properties
         public RequestMethod Method { get; set; }
+
         public string Url { get; set; }
+
         public string Content { get; set; }
 
         public Header Header { get; set; }
+
+        public HttpSession Session { get; set; }
+        #endregion
 
         public HttpRequest()
         {

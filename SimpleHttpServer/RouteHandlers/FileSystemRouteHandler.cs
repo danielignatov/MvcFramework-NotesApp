@@ -13,6 +13,7 @@ namespace SimpleHttpServer.RouteHandlers
         public string BasePath { get; set; }
         public HttpRequest Request { get; set; }
         public string RouteUrlRegex { get; set; }
+
         public HttpResponse Handle(HttpRequest request)
         {
             this.Request = request;
@@ -78,6 +79,7 @@ namespace SimpleHttpServer.RouteHandlers
             response.StatusCode = ResponseStatusCode.Ok;
             response.Content = File.ReadAllBytes(localPath);
             response.Header.ContentLength = response.Content.Length.ToString();
+            
             return response;
         }
 

@@ -1,8 +1,4 @@
-﻿using SimpleHttpServer.Enums;
-using System;
-using System.Text;
-
-// NOTE: two consequences of this simplified response model are:
+﻿// NOTE: two consequences of this simplified response model are:
 //
 //      (a) it's not possible to send 8-bit clean responses (like file content)
 //      (b) it's 
@@ -11,11 +7,15 @@ using System.Text;
 
 namespace SimpleHttpServer.Models
 {
-
+    using SimpleHttpServer.Enums;
+    using System;
+    using System.Text;
 
     public class HttpResponse
     {
+        #region Properties
         public ResponseStatusCode StatusCode { get; set; }
+
         public string StatusMessage
         {
             get
@@ -23,9 +23,11 @@ namespace SimpleHttpServer.Models
                 return Enum.GetName(typeof(ResponseStatusCode), this.StatusCode);
             }
         }
+
         public byte[] Content { get; set; }
 
         public Header Header { get; set; }
+
         public string ContentAsUTF8
         {
             set
@@ -33,12 +35,14 @@ namespace SimpleHttpServer.Models
                 this.Content = Encoding.UTF8.GetBytes(value);
             }
         }
+        #endregion
 
         public HttpResponse()
         {
             this.Header = new Header(HeaderType.HttpResponse);
             this.Content = new byte[] { };
         }
+
         public override string ToString()
         {
             return string.Format("HTTP/1.0 {0} {1}\r\n{2}",

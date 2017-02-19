@@ -126,18 +126,30 @@
 
             this.methodParams
                 = new object[parameters.Count()];
-
-
+            
             int index = 0;
+
             foreach (ParameterInfo param in parameters)
             {
                 if (param.ParameterType.IsPrimitive)
                 {
                     object value = this.getParams[param.Name];
+
                     this.methodParams[index] = Convert.ChangeType(
                         value,
                         param.ParameterType
                         );
+
+                    index++;
+                }
+                else if (param.ParameterType == typeof(HttpRequest))
+                {
+                    this.methodParams[index] = request;
+                    index++;
+                }
+                else if (param.ParameterType == typeof(HttpSession))
+                {
+                    this.methodParams[index] = request.Session;
                     index++;
                 }
                 else

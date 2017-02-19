@@ -9,6 +9,8 @@
             this.Users = new Dictionary<string, string>();
         }
 
+        #region Properties
         public IDictionary<string, string> Users { get; set; }
+        #endregion
     }
 }

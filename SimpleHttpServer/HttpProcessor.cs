@@ -13,14 +13,22 @@ namespace SimpleHttpServer
 {
     public class HttpProcessor
     {
+        #region Fields
         private IList<Route> Routes;
         private HttpRequest Request;
         private HttpResponse Response;
+        private IDictionary<string, HttpSession> sessions;
+        #endregion
 
-        public HttpProcessor(IEnumerable<Route> routes)
+        #region Constructors
+        public HttpProcessor(
+            IEnumerable<Route> routes,
+            IDictionary<string, HttpSession> sessions)
         {
             this.Routes = new List<Route>(routes);
+            this.sessions = new Dictionary<string, HttpSession>(sessions);
         }
+        #endregion
 
         public void HandleClient(TcpClient tcpClient)
         {
@@ -28,14 +36,13 @@ namespace SimpleHttpServer
             {
                 Request = GetRequest(stream);
                 Response = RouteRequest();
-                Console.WriteLine("-RESPONSE-------------");
+                Console.WriteLine("--- RESPONSE -------------");
                 Console.WriteLine(Response.Header);
                 //Console.WriteLine(Encoding.UTF8.GetString(Response.Content));
-                Console.WriteLine("----------------------");
+                Console.WriteLine("--- END RESPONSE ---------");
                 StreamUtils.WriteResponse(stream, Response);
             }
         }
-
 
         private HttpRequest GetRequest(Stream inputStream)
         {
@@ -93,9 +100,8 @@ namespace SimpleHttpServer
                 }
             }
 
-
-
             string content = null;
+
             if (header.ContentLength != null)
             {
                 int totalBytes = Convert.ToInt32(header.ContentLength);
@@ -114,9 +120,6 @@ namespace SimpleHttpServer
                 content = Encoding.ASCII.GetString(bytes);
             }
 
-
-
-
             var request = new HttpRequest()
             {
                 Method = method,
@@ -124,12 +127,26 @@ namespace SimpleHttpServer
                 Header = header,
                 Content = content
             };
-            Console.WriteLine("-REQUEST-----------------------------");
+
+            // Check if user has Cookie with sessionId
+            if (request.Header.Cookies.Contains("sessionId"))
+            {
+                var sessionId = request.Header.Cookies["sessionId"].Value;
+                request.Session = new HttpSession(sessionId);
+
+                if (!this.sessions.ContainsKey(sessionId))
+                {
+                    this.sessions.Add(sessionId, request.Session);
+                }
+            }
+
+            Console.WriteLine("--- REQUEST ------------------");
             Console.WriteLine(request);
-            Console.WriteLine("------------------------------");
+            Console.WriteLine("--- END REQUEST --------------");
 
             return request;
         }
+
         private HttpResponse RouteRequest()
         {
             var routes = this.Routes
@@ -142,15 +159,31 @@ namespace SimpleHttpServer
             var route = routes.SingleOrDefault(x => x.Method == Request.Method);
 
             if (route == null)
+            {
                 return new HttpResponse()
                 {
                     StatusCode = ResponseStatusCode.MethodNotAllowed
                 };
+            }
+            
+            if (this.Request.Session == null)
+            {
+                var session = SessionCreator.Create();
+                this.Request.Session = session;
+            }
 
             // trigger the route handler...
             try
             {
-                return route.Callable(Request);
+                var response = route.Callable(this.Request);
+
+                if (!Request.Header.Cookies.Contains("sessionId"))
+                {
+                    var sessionCookie = new Cookie("sessionId", this.Request.Session.Id + "; HttpOnly; path=/");
+                    response.Header.AddCookie(sessionCookie);
+                }
+
+                return response;
             }
             catch (Exception ex)
             {
@@ -158,7 +191,6 @@ namespace SimpleHttpServer
                 Console.WriteLine(ex.StackTrace);
                 return HttpResponseBuilder.InternalServerError();
             }
-
         }
     }
 }

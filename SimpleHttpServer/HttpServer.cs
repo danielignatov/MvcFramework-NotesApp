@@ -1,23 +1,34 @@
-﻿using SimpleHttpServer.Models;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading;
-
-namespace SimpleHttpServer
+﻿namespace SimpleHttpServer
 {
+    using SimpleHttpServer.Models;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Threading;
+
     public class HttpServer
     {
+        #region Constructors
         public HttpServer(int port, IEnumerable<Route> routes)
         {
             this.Port = port;
-            this.Processor = new HttpProcessor(routes);
             this.IsActive = true;
+            this.Sessions = new Dictionary<string, HttpSession>();
+            this.Processor = new HttpProcessor(routes, this.Sessions);
         }
+        #endregion
+
+        #region Properties
         public TcpListener Listener { get; private set; }
+
         public int Port { get; private set; }
+
         public HttpProcessor Processor { get; private set; }
+
         public bool IsActive { get; private set; }
+
+        public IDictionary<string, HttpSession> Sessions { get; set; }
+        #endregion
 
         public void Listen()
         {
@@ -36,6 +47,3 @@ namespace SimpleHttpServer
         }
     }
 }
-
-
-
