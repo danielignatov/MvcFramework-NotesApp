@@ -1,6 +1,8 @@
 ﻿namespace SimpleMVC.App.MVC.Security
 {
+    using Data;
     using Interfaces;
+    using Models;
     using SimpleHttpServer.Models;
     using System.Linq;
 
@@ -26,6 +28,17 @@
             }
 
             return false;
+        }
+
+        public void LogOut(HttpSession session)
+        {
+            using (var context = new NotesApplicationContext())
+            {
+                Login login = context.Logins.Where(s => s.SessionId == session.Id).FirstOrDefault();
+
+                context.Logins.Remove(login);
+                context.SaveChanges();
+            }
         }
         #endregion
     }

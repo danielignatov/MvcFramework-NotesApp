@@ -30,11 +30,7 @@ namespace SimpleMVC.App.Data
         #region Methods
         void IDbIdentityContext.SaveChanges()
         {
-            // !
-            using (var context = new NotesApplicationContext())
-            {
-                context.SaveChanges();
-            }
+            // todo
         }
         #endregion
     }

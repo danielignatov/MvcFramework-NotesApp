@@ -171,5 +171,13 @@
 
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Logout(HttpSession session)
+        {
+            signInManager.LogOut(session);
+
+            return Redirect("../home/index");
+        }
     }
 }

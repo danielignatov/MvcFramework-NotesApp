@@ -89,10 +89,12 @@
     <Compile Include="RouteTable.cs" />
     <Compile Include="ViewModels\AllUsernamesViewModel.cs" />
     <Compile Include="ViewModels\GreetViewModel.cs" />
+    <Compile Include="ViewModels\HomeIndexButtonsViewModel.cs" />
     <Compile Include="Views\Home\Index.cs" />
     <Compile Include="Views\Users\All.cs" />
     <Compile Include="Views\Users\Greet.cs" />
     <Compile Include="Views\Users\Login.cs" />
+    <Compile Include="Views\Users\Logout.cs" />
     <Compile Include="Views\Users\Profile.cs" />
     <Compile Include="Views\Users\Register.cs" />
   </ItemGroup>
