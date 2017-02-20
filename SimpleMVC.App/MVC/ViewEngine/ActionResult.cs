@@ -11,10 +11,17 @@
         {
             this.Action = (IRenderable)Activator.CreateInstance(Type.GetType(viewFullQualifedName));
         }
+
+        public ActionResult(string viewFullQualifedName, string location) : this(viewFullQualifedName)
+        {
+            this.Location = location;
+        }
         #endregion
 
         #region Properties
         public IRenderable Action { get; set; }
+
+        public string Location { get; private set; }
         #endregion
 
         #region Methods

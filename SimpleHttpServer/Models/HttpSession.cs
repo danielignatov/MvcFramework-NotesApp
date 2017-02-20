@@ -12,6 +12,7 @@
         public HttpSession(string id)
         {
             this.parameters = new Dictionary<string, string>();
+            this.Id = id;
         }
         #endregion
 

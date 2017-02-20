@@ -30,8 +30,11 @@ namespace SimpleMVC.App.Data
         #region Methods
         void IDbIdentityContext.SaveChanges()
         {
-            // todo
-            throw new NotImplementedException();
+            // !
+            using (var context = new NotesApplicationContext())
+            {
+                context.SaveChanges();
+            }
         }
         #endregion
     }

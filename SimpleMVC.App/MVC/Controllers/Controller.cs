@@ -42,6 +42,22 @@
             return new ActionResult(fullQualifedName);
         }
 
+        protected IActionResult Redirect(string location, [CallerMemberName]string callee = "")
+        {
+            string controllerName = this.GetType()
+                .Name
+                .Replace(MvcContext.Current.ControllersSuffix, string.Empty);
+
+            string fullQualifedName = string.Format(
+                "{0}.{1}.{2}.{3}",
+                MvcContext.Current.AssemblyName,
+                MvcContext.Current.ViewsFolder,
+                controllerName,
+                callee);
+
+            return new ActionResult(fullQualifedName, location);
+        }
+
         // Generic
         protected IActionResult<T> View<T>(T model, [CallerMemberName]string callee = "")
         {
@@ -68,6 +84,22 @@
                 action);
 
             return new ActionResult<T>(fullQualifedName, model);
+        }
+
+        protected IActionResult<T> Redirect<T>(T model, string location, [CallerMemberName]string callee = "")
+        {
+            string controllerName = this.GetType()
+                .Name
+                .Replace(MvcContext.Current.ControllersSuffix, string.Empty);
+
+            string fullQualifedName = string.Format(
+                "{0}.{1}.{2}.{3}",
+                MvcContext.Current.AssemblyName,
+                MvcContext.Current.ViewsFolder,
+                controllerName,
+                callee);
+
+            return new ActionResult<T>(fullQualifedName, location, model);
         }
         #endregion
     }

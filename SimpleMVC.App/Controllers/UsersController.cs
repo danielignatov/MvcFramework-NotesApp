@@ -7,6 +7,7 @@
     using MVC.Controllers;
     using MVC.Interfaces;
     using MVC.Interfaces.Generic;
+    using MVC.Security;
     using SimpleHttpServer.Models;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,6 +15,17 @@
 
     public class UsersController : Controller
     {
+        #region Fields
+        private SignInManager signInManager;
+        #endregion
+
+        #region Constructors
+        public UsersController()
+        {
+            signInManager = new SignInManager(new NotesApplicationContext());
+        }
+        #endregion
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -39,8 +51,13 @@
         }
 
         [HttpGet]
-        public IActionResult<AllUsersIdUsernameViewModel> All()
+        public IActionResult<AllUsersIdUsernameViewModel> All(HttpSession session)
         {
+            if (!signInManager.IsAuthenticated(session))
+            {
+                return Redirect(new AllUsersIdUsernameViewModel(), "../users/login");
+            }
+
             Dictionary<string, string> users = null;
 
             using (var context = new NotesApplicationContext())
@@ -147,7 +164,11 @@
                 }
             }
 
-            // todo add loginsuccess so user get feedback of login succes or not
+            if (loginSuccess == true)
+            {
+                return Redirect("../home/index");
+            }
+
             return View();
         }
     }

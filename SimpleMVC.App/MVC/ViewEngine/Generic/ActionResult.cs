@@ -12,10 +12,17 @@
 
             Action.Model = model;
         }
+
+        public ActionResult(string fullQualifedName, string location, T model) : this(fullQualifedName, model)
+        {
+            this.Location = location;
+        }
         #endregion
 
         #region Properties
         public IRenderable<T> Action { get; set; }
+
+        public string Location { get; private set; }
         #endregion
 
         #region Methods

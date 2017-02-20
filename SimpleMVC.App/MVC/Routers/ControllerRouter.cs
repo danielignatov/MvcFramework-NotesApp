@@ -40,11 +40,18 @@
                 .Invoke(controller, this.methodParams);
 
             string content = result.Invoke();
-            var response = new HttpResponse()
+            var response = new HttpResponse();
+
+            if (!string.IsNullOrEmpty(result.Location))
             {
-                ContentAsUTF8 = content,
-                StatusCode = ResponseStatusCode.Ok
-            };
+                response.Header.OtherParameters.Add("Location", result.Location);
+                response.StatusCode = ResponseStatusCode.Found;
+            }
+            else
+            {
+                response.ContentAsUTF8 = content;
+                response.StatusCode = ResponseStatusCode.Ok;
+            }
 
             this.ClearRequestParameters();
             return response;
