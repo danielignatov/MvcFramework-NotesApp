@@ -1,14 +1,12 @@
-﻿using SimpleMVC.App.BindingModels;
-using SimpleMVC.App.MVC.Interfaces.Generic;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleMVC.App.Views.Users
+﻿namespace SimpleMVC.App.Views.Users
 {
+    using SimpleMVC.App.MVC.Interfaces.Generic;
+    using SimpleMVC.App.ViewModels;
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+
     public class Profile : IRenderable<UserProfileViewModel>
     {
         public UserProfileViewModel Model { get; set; }
